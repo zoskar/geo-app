@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class search extends StatelessWidget {
-  const search({
+class Search extends StatelessWidget {
+  const Search({
     Key? key,
   }) : super(key: key);
 

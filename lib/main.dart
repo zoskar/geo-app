@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 import './search.dart';
-import './getData.dart';
+import './getCountry.dart';
+import './dropList.dart';
 
 void main() {
   runApp(const MyApp());
@@ -35,9 +36,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final _items = ['By name', 'By continent', 'By currency', 'By capital'];
   var _selectedValue = 'By name';
-  int flag = 0;
+  int flag = 1;
 
   void _pickList(String? newValue) {
     setState(() {
@@ -51,75 +51,85 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void initState() {
-    super.initState();
-    var country = fetchAlbum();
+  void _searchView() {
+    setState(() {
+      flag = 0;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
-        body: flag == 0
-            ? Column(
-                children: [
-                  search(),
-                  newMethod(),
-                  FloatingActionButton(
-                      onPressed: _countryView,
-                      child: Icon(Icons.arrow_forward_rounded))
-                ],
+    if (flag == 0) {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+          ),
+          body: Column(
+            children: [
+              Search(),
+              DropList(
+                selectedValue: _selectedValue,
+                handler: _pickList,
+              ),
+              FloatingActionButton(
+                onPressed: _countryView,
+                child: Icon(Icons.arrow_forward_rounded),
               )
-            : Column(
-                children: [
-                  FutureBuilder<Country>(
-                      future: fetchAlbum(),
-                      builder: (context, snapshot) {
-                        return snapshot.hasData
-                            ? Column(
-                                children: [
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    child: Row(
-                                      children: [
-                                        FloatingActionButton(
-                                          onPressed: null,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              )
-                            : Center(
-                                child: CircularProgressIndicator(),
-                              );
-                      })
-                ],
-              ));
-  }
-
-  DropdownButton<String> newMethod() {
-    return DropdownButton<String>(
-                  value: _selectedValue,
-                  elevation: 16,
-                  style: const TextStyle(color: Colors.deepPurple),
-                  underline: Container(
-                    height: 2,
-                    color: Colors.deepPurple,
-                  ),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedValue = newValue!;
-                    });
-                  },
-                  items: _items.map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
-                );
+            ],
+          ));
+    } else {
+      return Scaffold(
+          appBar: AppBar(
+            title: Text(widget.title),
+            leading: IconButton(
+              onPressed: _searchView,
+              icon: Icon(Icons.arrow_back),
+            ),
+          ),
+          body: Column(
+            children: [
+              FutureBuilder<Country>(
+                  future: fetchAlbum(),
+                  builder: (context, snapshot) {
+                    return snapshot.hasData
+                        ? Column(
+                            children: [
+                              Container(
+                                margin: EdgeInsets.all(10),
+                              ),
+                              Text(
+                                snapshot.data!.name,
+                                style: TextStyle(fontSize: 40),
+                              ),
+                              Container(
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black)),
+                                  child: Image.network(
+                                    snapshot.data!.flagLink,
+                                  )),
+                              SizedBox(height: 30),
+                              Text('Capital: ${snapshot.data!.capital}',
+                                  style: TextStyle(fontSize: 24)),
+                              SizedBox(height: 15),
+                              Text('Population: ${snapshot.data!.population}',
+                                  style: TextStyle(fontSize: 24)),
+                              SizedBox(height: 15),
+                              Text('Area: ${snapshot.data!.area}',
+                                  style: TextStyle(fontSize: 24)),
+                              SizedBox(height: 15),
+                              Text('Currency: ${snapshot.data!.currency}',
+                                  style: TextStyle(fontSize: 24)),
+                              SizedBox(height: 15),
+                              Text('Region: ${snapshot.data!.subregion}',
+                                  style: TextStyle(fontSize: 24)),
+                            ],
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(),
+                          );
+                  })
+            ],
+          ));
+    }
   }
 }

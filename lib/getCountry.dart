@@ -17,7 +17,8 @@ Future<Country> fetchAlbum(
         population: decodedResponse[0]['population'],
         area: decodedResponse[0]['area'],
         currency: decodedResponse[0]['currencies'].values.elementAt(0)['name'],
-        subregion: decodedResponse[0]['subregion']);
+        subregion: decodedResponse[0]['subregion'],
+        flagLink: decodedResponse[0]['flags']['png']);
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
@@ -32,6 +33,7 @@ class Country {
   final double area;
   final String currency;
   final String subregion;
+  final String flagLink;
 
   Country(
       {required this.name,
@@ -39,7 +41,8 @@ class Country {
       required this.population,
       required this.area,
       required this.currency,
-      required this.subregion});
+      required this.subregion,
+      required this.flagLink});
 
   // factory Country.fromJson(Map<String, dynamic> json) {
   //   return Country(name: json['name'], capital: json['capital'], population: json['population']);
