@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-Future<Country> fetchAlbum(
+Future<Country> fetchCountry(
     {String link = 'https://restcountries.com/v3.1/name/poland)'}) async {
   var response = await http.get(Uri.parse(link));
 

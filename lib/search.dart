@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Search extends StatelessWidget {
-  const Search({
-    Key? key,
-  }) : super(key: key);
+
+  var myController;
+
+  Search({required this.myController});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 30, left: 30, right: 30, bottom: 10),
       child: TextField(
+        controller: myController,
         maxLength: 60,
         textAlign: TextAlign.center,
         decoration: InputDecoration(
