@@ -35,7 +35,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   var _selectedValue = 'By name';
   int flag = 0;
   final _myController = TextEditingController();
@@ -49,6 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
   void _countryView() {
     setState(() {
       flag = 1;
+    });
+  }
+
+  void _countryViewFromCountries(String request) {
+    setState(() {
+      flag = 1;
+      _myController.text = request;
     });
   }
 
@@ -78,6 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
       return CountryView(
         selectedValue: _selectedValue,
         searchView: _searchView,
+        countryViewFromCountries: _countryViewFromCountries,
         widgetTitle: widget.title,
         request: _myController.text,
       );

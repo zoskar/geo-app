@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 import './getCountry.dart';
+import './multiCountries.dart';
 
 class CountryView extends StatelessWidget {
   String widgetTitle;
   VoidCallback searchView;
+  Function countryViewFromCountries;
   String request;
   String selectedValue;
 
   CountryView({
+    required this.countryViewFromCountries,
     required this.searchView,
     required this.widgetTitle,
     required this.request,
@@ -27,10 +30,18 @@ class CountryView extends StatelessWidget {
         ),
         body: Column(
           children: [
-            FutureBuilder<Country>(
+            FutureBuilder<dynamic>(
                 future: fetchCountry(
                     request: request, selectedValue: selectedValue),
                 builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data.length > 1) {
+                      return MultiCountries(
+                        countries: snapshot.data,
+                        countryViewFromCountries: countryViewFromCountries,
+                      );
+                    }
+                  }
                   return snapshot.hasData
                       ? Column(
                           children: [
@@ -38,29 +49,31 @@ class CountryView extends StatelessWidget {
                               margin: EdgeInsets.all(10),
                             ),
                             Text(
-                              snapshot.data!.name,
+                              snapshot.data[0]['name']['common'],
                               style: TextStyle(fontSize: 40),
                             ),
                             Container(
                                 decoration: BoxDecoration(
                                     border: Border.all(color: Colors.black)),
                                 child: Image.network(
-                                  snapshot.data!.flagLink,
+                                  snapshot.data[0]['flags']['png'],
                                 )),
                             SizedBox(height: 30),
-                            Text('Capital: ${snapshot.data!.capital}',
+                            Text('Capital: ${snapshot.data[0]['capital'][0]}',
                                 style: TextStyle(fontSize: 24)),
                             SizedBox(height: 15),
-                            Text('Population: ${snapshot.data!.population}',
+                            Text(
+                                'Population: ${snapshot.data[0]['population']}',
                                 style: TextStyle(fontSize: 24)),
                             SizedBox(height: 15),
-                            Text('Area: ${snapshot.data!.area}',
+                            Text('Area: ${snapshot.data[0]['area']}',
                                 style: TextStyle(fontSize: 24)),
                             SizedBox(height: 15),
-                            Text('Currency: ${snapshot.data!.currency}',
+                            Text(
+                                'Currency: ${snapshot.data[0]['currencies'].values.elementAt(0)['name']}',
                                 style: TextStyle(fontSize: 24)),
                             SizedBox(height: 15),
-                            Text('Region: ${snapshot.data!.subregion}',
+                            Text('Region: ${snapshot.data[0]['region']}',
                                 style: TextStyle(fontSize: 24)),
                           ],
                         )
@@ -70,6 +83,5 @@ class CountryView extends StatelessWidget {
                 })
           ],
         ));
-    throw UnimplementedError();
   }
 }

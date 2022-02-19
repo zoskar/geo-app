@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import './search.dart';
 import './dropList.dart';
+import './multiCountries.dart';
 
 class SearchView extends StatelessWidget {
   String widgetTitle;
@@ -9,6 +10,7 @@ class SearchView extends StatelessWidget {
   Function pickList;
   VoidCallback countryView;
   var myController;
+  List<dynamic> countries = [];
 
   SearchView({
     required this.countryView,
