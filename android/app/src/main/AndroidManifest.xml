@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+
     package="com.example.geoapp">
+      <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
+
    <application
         android:label="geoapp"
         android:name="${applicationName}"
