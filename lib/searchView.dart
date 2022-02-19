@@ -4,20 +4,20 @@ import './search.dart';
 import './dropList.dart';
 
 class SearchView extends StatelessWidget {
-  String widgetTitle;
-  String selectedValue;
-  Function pickList;
-  VoidCallback countryView;
-  var myController;
-  List<dynamic> countries = [];
+  final String widgetTitle;
+  final String selectedValue;
+  final Function pickList;
+  final VoidCallback countryView;
+  final myController;
+  final List<dynamic> countries = [];
 
-  SearchView({
+  SearchView({Key? key, 
     required this.countryView,
     required this.pickList,
     required this.selectedValue,
     required this.widgetTitle,
     required this.myController,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,12 @@ class SearchView extends StatelessWidget {
               selectedValue: selectedValue,
               handler: pickList,
             ),
-            FloatingActionButton(
-              onPressed: countryView,
-              child: Icon(Icons.arrow_forward_rounded),
+            Container(
+              margin: const EdgeInsets.all(25),
+              child: FloatingActionButton(
+                onPressed: countryView,
+                child: const Icon(Icons.arrow_forward_rounded),
+              ),
             ),
           ],
         ));

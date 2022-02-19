@@ -5,7 +5,7 @@ class DropList extends StatelessWidget {
   final Function handler;
   final String selectedValue;
 
-  DropList({required this.handler, required this.selectedValue});
+  DropList({Key? key, required this.handler, required this.selectedValue}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

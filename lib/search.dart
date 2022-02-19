@@ -16,14 +16,14 @@ class Search extends StatelessWidget {
         textAlign: TextAlign.center,
         decoration: InputDecoration(
             counterText: '',
-            suffixIcon: Padding(
+            suffixIcon: const Padding(
               padding: EdgeInsetsDirectional.only(end: 5),
               child: Icon(Icons.search),
             ),
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
             filled: true,
-            hintStyle: TextStyle(color: Colors.grey),
-            hintText: '',
+            hintStyle: const TextStyle(color: Colors.grey),
+            hintText: 'Enter text',
             fillColor: Colors.white70),
       ),
     );

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'countryView.dart';
 
 class MultiCountries extends StatelessWidget {
   List<dynamic> countries;
@@ -11,13 +10,12 @@ class MultiCountries extends StatelessWidget {
   double margin = 20;
 
   MultiCountries(
-      {required this.countries, required this.countryViewFromCountries});
+      {Key? key, required this.countries, required this.countryViewFromCountries}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     for (var country in countries) {
       list.add(Container(
-        height: 131,
         margin: EdgeInsets.all(margin),
         width: (MediaQuery.of(context).size.width) / 2 - 2 * margin,
         //decoration: BoxDecoration(border: Border.all()),
@@ -31,14 +29,17 @@ class MultiCountries extends StatelessWidget {
                   country['flags']['png'],
                 ),
               ),
-              Text(country['name']['common'])
+              Text(
+                country['name']['common'],
+                style: const TextStyle(fontSize: 18, color: Colors.black),
+              )
             ],
           ),
         ),
       ));
     }
-    bool even = ((list.length / 2) % 2 == 0);
-    for (var i = 0; i < list.length-1; i += 2) {
+    bool even = ((list.length) % 2 == 0);
+    for (var i = 0; i < list.length - 1; i += 2) {
       rows.add(Row(
         children: [list[i], list[i + 1]],
       ));

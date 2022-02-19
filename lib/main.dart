@@ -19,7 +19,8 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'GeoApp',
-      theme: ThemeData(primarySwatch: Colors.deepPurple),
+      theme:
+          ThemeData(primarySwatch: Colors.deepPurple, fontFamily: 'Montserrat'),
       home: const MyHomePage(title: 'Geo-app'),
     );
   }
@@ -55,6 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       flag = 1;
       _myController.text = request;
+      _selectedValue = 'By name';
     });
   }
 

@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:geoapp/main.dart';
 import 'package:http/http.dart' as http;
 
 Future<dynamic> fetchCountry(
