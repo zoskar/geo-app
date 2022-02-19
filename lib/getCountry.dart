@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 Future<Country> fetchCountry(
-    {String link = 'https://restcountries.com/v3.1/name/poland)'}) async {
+    {required String selectedValue, required String request}) async {
+  String link = getLink(choice: selectedValue, request: request);
+
   var response = await http.get(Uri.parse(link));
 
   if (response.statusCode == 200) {
@@ -17,12 +18,24 @@ Future<Country> fetchCountry(
         population: decodedResponse[0]['population'],
         area: decodedResponse[0]['area'],
         currency: decodedResponse[0]['currencies'].values.elementAt(0)['name'],
-        subregion: decodedResponse[0]['subregion'],
+        subregion: decodedResponse[0]['region'],
         flagLink: decodedResponse[0]['flags']['png']);
   } else {
     // If the server did not return a 200 OK response,
     // then throw an exception.
     throw Exception('Failed to load Country');
+  }
+}
+
+String getLink({required String choice, required String request}) {
+  if (choice == 'By continent') {
+    return 'https://restcountries.com/v3.1/region/$request';
+  } else if (choice == 'By currency') {
+    return 'https://restcountries.com/v3.1/currency/$request';
+  } else if (choice == 'By capital') {
+    return 'https://restcountries.com/v3.1/capital/$request';
+  } else {
+    return 'https://restcountries.com/v3.1/name/$request';
   }
 }
 

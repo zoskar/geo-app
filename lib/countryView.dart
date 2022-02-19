@@ -5,8 +5,15 @@ import './getCountry.dart';
 class CountryView extends StatelessWidget {
   String widgetTitle;
   VoidCallback searchView;
+  String request;
+  String selectedValue;
 
-  CountryView({required this.searchView, required this.widgetTitle});
+  CountryView({
+    required this.searchView,
+    required this.widgetTitle,
+    required this.request,
+    required this.selectedValue,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +28,8 @@ class CountryView extends StatelessWidget {
         body: Column(
           children: [
             FutureBuilder<Country>(
-                future: fetchCountry(),
+                future: fetchCountry(
+                    request: request, selectedValue: selectedValue),
                 builder: (context, snapshot) {
                   return snapshot.hasData
                       ? Column(

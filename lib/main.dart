@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
   var _selectedValue = 'By name';
-  int flag = 1;
+  int flag = 0;
   final _myController = TextEditingController();
 
   void _pickList(String? newValue) {
@@ -76,8 +76,10 @@ class _MyHomePageState extends State<MyHomePage> {
           widgetTitle: widget.title);
     } else {
       return CountryView(
+        selectedValue: _selectedValue,
         searchView: _searchView,
         widgetTitle: widget.title,
+        request: _myController.text,
       );
     }
   }
