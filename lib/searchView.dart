@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import './search.dart';
 import './dropList.dart';
-import './multiCountries.dart';
 
 class SearchView extends StatelessWidget {
   String widgetTitle;

@@ -41,6 +41,13 @@ class CountryView extends StatelessWidget {
                         countryViewFromCountries: countryViewFromCountries,
                       );
                     }
+                    if (snapshot.data.length == 0) {
+                      return Center(
+                        heightFactor: 5,
+                        child: Text('Country not found!',
+                            style: TextStyle(fontSize: 24)),
+                      );
+                    }
                   }
                   return snapshot.hasData
                       ? Column(
@@ -78,6 +85,7 @@ class CountryView extends StatelessWidget {
                           ],
                         )
                       : Center(
+                          heightFactor: 5,
                           child: CircularProgressIndicator(),
                         );
                 })
