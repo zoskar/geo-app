@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:geoapp/searchView.dart';
 
-import './countryView.dart';
+import 'package:geoapp/Views/countryViewSpecialCase.dart';
+import 'package:geoapp/Views/searchView.dart';
+import 'Views/countryView.dart';
 
 void main() {
   runApp(const MyApp());
@@ -39,10 +40,17 @@ class _MyHomePageState extends State<MyHomePage> {
   var _selectedValue = 'By name';
   int flag = 0;
   final _myController = TextEditingController();
+  late var _country;
 
   void _pickList(String? newValue) {
     setState(() {
       _selectedValue = newValue!;
+    });
+  }
+
+  void _searchView() {
+    setState(() {
+      flag = 0;
     });
   }
 
@@ -52,17 +60,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-  void _countryViewFromCountries(String request) {
+  void _countryViewFromCountries(var country) {
     setState(() {
-      flag = 1;
-      _myController.text = request;
+      flag = 2;
+      _myController.text = country['name']['common'];
       _selectedValue = 'By name';
-    });
-  }
-
-  void _searchView() {
-    setState(() {
-      flag = 0;
+      _country = country;
     });
   }
 
@@ -82,13 +85,20 @@ class _MyHomePageState extends State<MyHomePage> {
           pickList: _pickList,
           selectedValue: _selectedValue,
           widgetTitle: widget.title);
-    } else {
+    } else if (flag == 1) {
       return CountryView(
         selectedValue: _selectedValue,
         searchView: _searchView,
         countryViewFromCountries: _countryViewFromCountries,
         widgetTitle: widget.title,
         request: _myController.text,
+        specialCase: false,
+      );
+    } else {
+      return CountryViewSpecialCase(
+        widgetTitle: widget.title,
+        country: _country,
+        searchView: _searchView,
       );
     }
   }

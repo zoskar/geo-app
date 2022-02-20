@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 class MultiCountries extends StatelessWidget {
   List<dynamic> countries;
   Function countryViewFromCountries;
@@ -10,7 +9,10 @@ class MultiCountries extends StatelessWidget {
   double margin = 20;
 
   MultiCountries(
-      {Key? key, required this.countries, required this.countryViewFromCountries}) : super(key: key);
+      {Key? key,
+      required this.countries,
+      required this.countryViewFromCountries})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +22,7 @@ class MultiCountries extends StatelessWidget {
         width: (MediaQuery.of(context).size.width) / 2 - 2 * margin,
         //decoration: BoxDecoration(border: Border.all()),
         child: TextButton(
-          onPressed: () => countryViewFromCountries(country['name']['common']),
+          onPressed: () => countryViewFromCountries(country),
           child: Column(
             children: [
               Container(
